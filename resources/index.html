@@ -1,6 +1,7 @@
 <html>
   <head>
     <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
       body {
         background-color: #f7f7f9;
@@ -66,21 +67,39 @@
 
       <button id="submit">Submit</button>
       <button id="toggle">Toggle error</button>
+
+      <br /> <br />
+
+      <h3 id="update" style="visibility: hidden">Message sent</h3>
     </form>
   </body>
   <script>
     const socket = io('https://mono-service.herokuapp.com');
 
+    function showMessage() {
+      document.getElementById("update").style.visibility = "visible";
+    }
+
+    function hideMessage() {
+      document.getElementById("update").style.visibility = "hidden";
+    }
+
     function handleSubmitEvent(event) {
       event.preventDefault();
       const message = document.getElementById('message').value
       socket.emit('event.interaction', [message])
+
+      showMessage()
+      setTimeout(() => hideMessage, 3000)
     }
 
     function handleToggleEvent(event) {
       event.preventDefault();
       const message = generateRandomString(10)
       socket.emit('event.error', [message])
+
+      showMessage()
+      setTimeout(() => hideMessage(), 3000)
     }
 
     function generateRandomString(length) {
@@ -97,6 +116,6 @@
     submit.addEventListener('click', handleSubmitEvent);
 
     const toggle = document.getElementById('toggle');
-    submit.addEventListener('click', handleToggleEvent);
+    toggle.addEventListener('click', handleToggleEvent);
   </script>
 </html>

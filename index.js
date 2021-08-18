@@ -13,10 +13,7 @@ app.use('/resources', express.static(path.join(__dirname, './resources')))
 app.use(express.json());
 
 // routes
-app.use('/index', (req, res) => res.sendFile(path.join(__dirname, './resources/index.html')))
-app.use('/interactions', (req, res) => res.sendFile(path.join(__dirname, './resources/interactions.txt')))
-app.use('/errors', (req, res) => res.sendFile(path.join(__dirname, './resources/errors.txt')))
-
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, './resources/index.html')))
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
