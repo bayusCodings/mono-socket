@@ -90,7 +90,7 @@
       socket.emit('event.interaction', [message])
 
       showMessage()
-      setTimeout(() => hideMessage, 3000)
+      setTimeout(() => hideMessage(), 3000)
     }
 
     function handleToggleEvent(event) {
